@@ -6,18 +6,20 @@ const port = 8080
 const conteiner = require("./productHandler");
 const { re } = require("mathjs")
 const handleProducts =  new conteiner;
-app.set("views","./views");
-app.set("views engine","pug");
 app.use(express.urlencoded({extended:true}))
 app.use(express.json())
 
+app.set("views","./views");
+app.set("view engine","ejs");
+
 app.get("/",(req,res)=>{
-    res.render("addProduct.pug");
+    res.render("addProduct.ejs");
 })
+
 
 app.get("/api/productos",(req,res)=>{
     let productos = handleProducts.getAll();
-    res.render("productList.pug",{productos});
+    res.render("productList.ejs",{productos:productos});
 })
 
 app.get("/api/productos/:id",(req,res)=>{
