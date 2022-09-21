@@ -38,6 +38,22 @@ save(obj) {
     }
 
 }
+saveMsg(obj) {
+    try {
+        let data = JSON.parse(fs.readFileSync("./msgs.txt","utf-8")) 
+        if(data) {
+            obj = {...obj,id:data[data.length - 1].id + 1};
+            data = [...data,obj]
+             fs.writeFileSync("./msgs.txt",JSON.stringify(data))
+             return obj.id;
+        }
+    } catch {
+        obj = [{...obj,id:1}];
+        fs.writeFileSync("./msgs.txt",JSON.stringify(obj));
+        return obj[0].id
+    }
+
+}
 getById(num){
     try{
     const data = JSON.parse(fs.readFileSync("./productos.txt","utf-8"));
@@ -53,6 +69,14 @@ getById(num){
 getAll(){
     try {
         return JSON.parse(fs.readFileSync("./productos.txt","utf-8"));
+    } catch (error) {
+        return null + " " + error
+    }
+    
+}
+getMsgs(){
+    try {
+        return JSON.parse(fs.readFileSync("./msgs.txt","utf-8"));
     } catch (error) {
         return null + " " + error
     }
