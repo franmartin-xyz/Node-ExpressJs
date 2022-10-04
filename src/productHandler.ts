@@ -1,14 +1,25 @@
-const fs = require("fs");
+import fs from "fs"
 
-function isObject(x) {let t= JSON.stringify(x); return true ? t[0] === '{' : false;}
+type producto = {
+    id:number,
+    timestamp:Date,
+    name:string,
+    description:string,
+    url:string,
+    price:number,
+    stock:number,
+}
+
+function isObject(x:object) {let t= JSON.stringify(x); return true ? t[0] === '{' : false;}
 
 class Contenedor{
 
-update(id,obj){
+update(id:number,obj:producto){
     try{
         let data = JSON.parse(fs.readFileSync("./productos.txt","utf-8"))
         if(data){
-           const found = data.findIndex(item=>{return item.id = id});
+            
+           const found = data.findIndex((item:producto)=>{return item.id = id});
            if(found>-1 && isObject(obj)){
             data[found] = obj;
             fs.writeFileSync("./productos.txt",JSON.stringify(data))
@@ -22,7 +33,7 @@ update(id,obj){
     }
 }    
 
-save(obj) {
+save(obj:producto) {
     try {
         let data = JSON.parse(fs.readFileSync("./productos.txt","utf-8")) 
         if(data) {
@@ -32,13 +43,13 @@ save(obj) {
              return obj.id;
         }
     } catch {
-        obj = [{...obj,id:1}];
+        let arr = [{...obj,id:1}];
         fs.writeFileSync("./productos.txt",JSON.stringify(obj));
-        return obj[0].id
+        return arr[0].id
     }
 
 }
-saveMsg(obj) {
+saveMsg(obj:producto) {
     try {
         let data = JSON.parse(fs.readFileSync("./msgs.txt","utf-8")) 
         if(data) {
@@ -48,16 +59,16 @@ saveMsg(obj) {
              return obj.id;
         }
     } catch {
-        obj = [{...obj,id:1}];
+        let arr = [{...obj,id:1}];
         fs.writeFileSync("./msgs.txt",JSON.stringify(obj));
-        return obj[0].id
+        return arr[0].id
     }
 
 }
-getById(num){
+getById(num:number){
     try{
     const data = JSON.parse(fs.readFileSync("./productos.txt","utf-8"));
-    const res = data.find(item => {
+    const res = data.find((item:producto) => {
         return item.id === Number(num);
         }
     );
@@ -74,20 +85,19 @@ getAll(){
     }
     
 }
-getMsgs(){
-    try {
-        return JSON.parse(fs.readFileSync("./msgs.txt","utf-8"));
-    } catch (error) {
-        return null + " " + error
-    }
+// getMsgs(){
+//     try {
+//         return JSON.parse(fs.readFileSync("./msgs.txt","utf-8"));
+//     } catch (error) {
+//         return null + " " + error
+//     }
     
-}
-deleteById(numb){
-    numb = Number(numb)
+// }
+deleteById(numb:number){
     try {
         let data = JSON.parse(fs.readFileSync("./productos.txt","utf-8")) 
         if(data) {
-            let index = data.findIndex(item=>{return item.id===numb});
+            let index = data.findIndex((item:producto)=>{return item.id===numb});
             if(index>-1) {
                 data.splice(index,1);
                 fs.writeFileSync("./productos.txt",JSON.stringify(data));
@@ -114,4 +124,4 @@ deleteAll(){
 }
 }
 
- module.exports = Contenedor;
+export default Contenedor
