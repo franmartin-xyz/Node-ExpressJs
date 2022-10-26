@@ -1,18 +1,24 @@
 {
-  "name": "sql",
+  "name": "mongo",
   "version": "1.0.0",
-  "description": "",
-  "type": "module",
-  "main": "index.js",
+  "description": "mongodb",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "run": "nodemon app.js"
   },
-  "keywords": [],
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/franmartin-xyz/BackendDesafios.git"
+  },
+  "author": "francisco martin",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/franmartin-xyz/BackendDesafios/issues"
+  },
+  "homepage": "https://github.com/franmartin-xyz/BackendDesafios#readme",
   "dependencies": {
-    "knex": "^2.3.0",
-    "mysql": "^2.18.1",
-    "sqlite3": "^5.1.2"
+    "express": "^4.18.2",
+    "mongoose": "^6.7.0",
+    "nodemon": "^2.0.20"
   }
 }
